@@ -129,7 +129,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class TasksActivity extends AppCompatActivity {
@@ -173,13 +178,22 @@ public class TasksActivity extends AppCompatActivity {
 
                             Task task = new Task(taskId, taskName, taskDueDate, taskTimeHours, taskTimeMinute, taskPriority);
                             tasks.add(task);
+                            Collections.sort(tasks, new TaskPriorityComparator());
                            taskAdapter.notifyDataSetChanged();
+
+
                         }
                     }
 
                 }
+
             }
+
+
         });
+
+
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +227,24 @@ public class TasksActivity extends AppCompatActivity {
 //                        Toast.makeText(TasksActivity.this, "Failed to mark task as done.", Toast.LENGTH_SHORT).show();
 //                    }
 //                });
+    }
+
+    // Custom comparator for sorting tasks in descending order based on priority
+    static class TaskPriorityComparator implements Comparator<Task> {
+        @Override
+        public int compare(Task task1, Task task2) {
+            // Assign priority order to high, medium, and low in descending order
+            String priority1 = task1.getTaskPriority();
+            String priority2 = task2.getTaskPriority();
+
+            if (priority1.equals("high")) {
+                return priority2.equals("high") ? 0 : -1;
+            } else if (priority1.equals("medium")) {
+                return priority2.equals("high") ? -1 : (priority2.equals("medium") ? 0 : 1);
+            } else {
+                return priority2.equals("low") ? 0 : 1;
+            }
+        }
     }
 }
 

@@ -37,6 +37,7 @@
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
+                android:backgroundTint="@color/primary"
                 android:background="@drawable/dashboard_button"
                 android:text="Tasks"/>
             <Button
