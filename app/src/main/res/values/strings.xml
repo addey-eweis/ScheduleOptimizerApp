@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">optimizedSchedule</string>
+    <string-array name="categories">
+        <item>Select a Category</item>
+        <item>Housing</item>
+        <item>Transportation</item>
+        <item>Food</item>
+        <item>Health and Insurance</item>
+        <item>Entertainment</item>
+        <item>Clothing and Personal Care</item>
+    </string-array>
+
+    <string-array name="taskPriority">
+        <item>Select Task Priority</item>
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+</resources>
+

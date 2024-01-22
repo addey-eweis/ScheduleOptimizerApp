@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="30dp"
+    tools:context=".activities.TaskAddActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+        <TextView
+            android:id="@+id/addTaskTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Task"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/taskNameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Name"
+            android:layout_below="@id/addTaskTitle"
+            android:textSize="15sp"
+            android:layout_marginTop="60dp"/>
+
+        <EditText
+            android:id="@+id/taskNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="0dp"
+            android:layout_below="@id/taskNameTitle"
+            android:layout_marginTop="13dp"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/taskTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Time"
+            android:layout_below="@id/taskNameInput"
+            android:textSize="15sp"
+            android:layout_marginTop="40dp"/>
+
+        <Button
+            android:id="@+id/taskTimeInput"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/taskTimeTitle"
+            android:text="Pick Time"
+            android:layout_marginTop="13dp"
+
+            android:onClick="showTimePickerDialog" />
+        <TextView
+            android:id="@+id/timeSelected"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="13dp"
+            android:layout_below="@id/taskTimeTitle"
+            android:gravity="center"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/taskTimeInput"/>
+
+        <TextView
+            android:id="@+id/taskDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Due Date"
+            android:layout_below="@id/taskTimeInput"
+            android:textSize="15sp"
+            android:layout_marginTop="40dp"/>
+        <EditText
+            android:id="@+id/taskDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/taskDateTitle"
+            android:layout_marginTop="13dp"
+            android:padding="0dp"
+            android:inputType= "date" />
+
+
+        <TextView
+            android:id="@+id/taskPriorityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Priority"
+            android:layout_below="@id/taskDateInput"
+            android:textSize="15sp"
+            android:layout_marginTop="40dp"/>
+
+        <Spinner
+            android:id="@+id/taskPriorityInput"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="13dp"
+            android:layout_below="@id/taskPriorityTitle"
+            android:spinnerMode="dropdown"
+            />
+
+        <TextView
+            android:id="@+id/taskCategoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:layout_below="@id/taskPriorityInput"
+            android:textSize="15sp"
+            android:layout_marginTop="40dp"/>
+
+        <Spinner
+            android:id="@+id/taskCategoryInput"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="13dp"
+            android:layout_below="@id/taskCategoryTitle"
+            android:spinnerMode="dropdown"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/done_button_add"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/taskCategoryInput"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:textSize="20sp"
+            android:layout_marginTop="50dp"
+            android:text="Add"
+            app:strokeWidth="2.5dp"/>
+
+        </RelativeLayout>
+</ScrollView>

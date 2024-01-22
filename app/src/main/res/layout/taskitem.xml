@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:paddingTop="20dp"
+    android:paddingHorizontal="20dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/priorityIndicatorGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <Button
+            android:id="@+id/priorityIndicatorOne"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            />
+<!--            android:background="@drawable/priority_indicator"-->
+
+        <Button
+            android:id="@+id/priorityIndicatorTwo"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_below="@id/priorityIndicatorOne"
+            />
+<!--            android:background="@drawable/priority_indicator" -->
+
+        <Button
+            android:id="@+id/priorityIndicatorThree"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_below="@id/priorityIndicatorTwo"
+            />
+<!--            android:background="@drawable/priority_indicator"-->
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/taskDetailsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/priorityIndicatorGroup"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        >
+
+        <TextView
+            android:id="@+id/taskName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="Task Name"/>
+
+        <TextView
+            android:id="@+id/taskDueDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/taskName"
+            android:textSize="10sp"
+            android:text="Task Due Date"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/taskTimeGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/taskFinishedButton"
+        android:layout_marginRight="15dp"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/taskTimeHours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"/>
+
+        <TextView
+            android:id="@+id/taskTimeHoursUnit"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_toRightOf="@id/taskTimeHours"
+            android:layout_height="wrap_content"
+            android:text="Hr"/>
+
+        <TextView
+            android:id="@+id/taskTimeMinutes"
+            android:text="2"
+            android:layout_below="@id/taskTimeHours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/taskTimeMinutesUnit"
+            android:text="Min"
+
+            android:layout_marginLeft="2dp"
+            android:layout_toRightOf="@id/taskTimeMinutes"
+            android:layout_below="@id/taskTimeHoursUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+        <Button
+            android:id="@+id/taskFinishedButton"
+            android:layout_width="84dp"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/black"
+            />
+
+
+
+<com.google.android.material.divider.MaterialDivider
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

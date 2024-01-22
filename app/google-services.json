@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "942949729761",
+    "project_id": "optimizedschedule-ad3b7",
+    "storage_bucket": "optimizedschedule-ad3b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942949729761:android:38a91f2c08192e964abea0",
+        "android_client_info": {
+          "package_name": "com.example.optimizedschedule"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF9ZHKYMVUn0iCarM8NEYHmiKeRwqlEtY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
