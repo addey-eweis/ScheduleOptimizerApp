@@ -25,6 +25,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         this.context = context.getApplicationContext();
     }
 
+    // Add this method to your TaskAdapter
+    public void setTasks(List<Task> updatedTasks) {
+        tasks = updatedTasks;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

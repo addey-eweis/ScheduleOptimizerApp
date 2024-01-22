@@ -1,7 +1,6 @@
 package com.example.optimizedschedule.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,25 +8,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CalendarView;
-import android.widget.Toast;
 
-import com.example.optimizedschedule.FirebaseOperationsManager;
 import com.example.optimizedschedule.R;
-import com.example.optimizedschedule.calendarTasksHandeling.CalendarTaskListAdapter;
 import com.example.optimizedschedule.taskListHandeling.Task;
+import com.example.optimizedschedule.taskListHandeling.TaskAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 //public class CalendarActivity extends AppCompatActivity {
 //    private CalendarTaskListAdapter taskCalendarAdapter;
@@ -134,7 +126,7 @@ import java.util.Map;
 
 
 public class CalendarActivity extends AppCompatActivity {
-    private CalendarTaskListAdapter taskCalendarAdapter;
+    private TaskAdapter taskCalendarAdapter;
     private List<Task> allTasks = new ArrayList<>();
     private List<Task> tasksForDate = new ArrayList<>();
 
@@ -181,40 +173,27 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
         // Set up RecyclerView and Adapter after data is retrieved
-        taskCalendarAdapter = new CalendarTaskListAdapter(allTasks, CalendarActivity.this);
+        taskCalendarAdapter = new TaskAdapter(allTasks, CalendarActivity.this);
         recyclerViewTasks.setLayoutManager(new LinearLayoutManager(CalendarActivity.this));
         recyclerViewTasks.setAdapter(taskCalendarAdapter);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                // Update the RecyclerView with tasks for the selected date
-                String updatedMonth;
-                if(month < 10){
-                    updatedMonth = "0" + (month + 1);
-                }
-                else{
-                    updatedMonth = String.valueOf(month + 1);
-                }
+                String updatedMonth = (month + 1 < 10) ? "0" + (month + 1) : String.valueOf(month + 1);
                 String selectedDate = dayOfMonth + "/" + updatedMonth + "/" + year;
-//                updateTaskListForDate(selectedDate);
-//                Toast.makeText(getApplicationContext(), "OnSelectedDayChange", Toast.LENGTH_SHORT).show();
 
-
+                // Clear previous tasks and filter based on the selected date
                 tasksForDate.clear();
-
                 for (Task task : allTasks) {
-                    Toast.makeText(CalendarActivity.this, selectedDate + " " + task.getTaskDueDate(), Toast.LENGTH_SHORT).show();
-
                     if (selectedDate.equals(task.getTaskDueDate())) {
                         tasksForDate.add(task);
-                        Toast.makeText(getApplicationContext(), task.getTaskName(), Toast.LENGTH_SHORT).show();
                     }
-
                 }
+
+                // Update the adapter with the filtered tasks
                 taskCalendarAdapter.setTasks(tasksForDate);
                 taskCalendarAdapter.notifyDataSetChanged();
-
             }
         });
     }
