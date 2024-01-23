@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         Button optimizedScheduleButton = findViewById(R.id.optimizedScheduleButton);
         Button chartsButton = findViewById(R.id.dataChartButton);
 
+
         tasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

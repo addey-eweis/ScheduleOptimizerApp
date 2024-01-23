@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.OptimizedScheduleActivity">
+    tools:context=".activities.DoneTasks">
 
     <TextView
-        android:id="@+id/optimizedTasksTitle"
+        android:id="@+id/doneTasks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Optimized Schedule"
+        android:text="Done Tasks"
         android:textColor="@color/primary"
         android:textAlignment="textStart"
         android:textStyle="bold"
@@ -18,12 +17,17 @@
         android:layout_marginTop="35dp"
         android:paddingHorizontal="25dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/optimizedTasksList"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/optimizedTasksTitle"
-        android:layout_marginTop="20dp"
-        />
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/doneTasks"
+        tools:context=".activities.MainActivity">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/doneTasksRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
 </RelativeLayout>

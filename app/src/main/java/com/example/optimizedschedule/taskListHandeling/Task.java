@@ -1,8 +1,5 @@
 package com.example.optimizedschedule.taskListHandeling;
 
-import android.graphics.drawable.Drawable;
-import android.widget.Button;
-
 // Task.java
 public class Task {
     private String id;
@@ -12,6 +9,16 @@ public class Task {
     private String taskTimeMinutes;
     private String taskPriority;
 
+    public int getCumulativeTaskPriority() {
+        return cumulativeTaskPriority;
+    }
+
+    public void setCumulativeTaskPriority(int cumulativeTaskPriority) {
+        this.cumulativeTaskPriority = cumulativeTaskPriority;
+    }
+
+    private int cumulativeTaskPriority;
+
     public Task(String id, String taskName, String taskDueDate, String taskTimeHours, String taskTimeMinutes, String taskPriority) {
         this.id = id;
         this.taskName = taskName;
@@ -19,6 +26,7 @@ public class Task {
         this.taskTimeHours = taskTimeHours;
         this.taskTimeMinutes = taskTimeMinutes;
         this.taskPriority = taskPriority;
+//        this.CumulativeTaskPriority = CumulativeTaskPriority;
     }
 
     public String getTaskName() {
