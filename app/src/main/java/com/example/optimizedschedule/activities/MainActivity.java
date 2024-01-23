@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button tasksButton = findViewById(R.id.tasksButton);
         Button calendarButton = findViewById(R.id.calendarButton);
+        Button optimizedScheduleButton = findViewById(R.id.optimizedScheduleButton);
         Button chartsButton = findViewById(R.id.dataChartButton);
 
         tasksButton.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        optimizedScheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OptimizedScheduleActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
