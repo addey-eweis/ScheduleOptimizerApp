@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.optimizedschedule.R;
@@ -27,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 public class OptimizedScheduleActivity extends AppCompatActivity implements TaskDoneListener {
-    private List<Task> OptimizedTasks;
+    private List<Task> optimizedTasks;
     private TaskAdapter taskAdapter;
 
 
@@ -36,12 +37,12 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_optimized_schedule);
 
-        OptimizedTasks = new ArrayList<>();
+        optimizedTasks = new ArrayList<>();
         CollectionReference transactionsCollectionRef = FirebaseFirestore.getInstance().collection("data");
 
         RecyclerView recyclerView = findViewById(R.id.optimizedTasksList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter = new TaskAdapter(OptimizedTasks, OptimizedScheduleActivity.this, this);
+        taskAdapter = new TaskAdapter(optimizedTasks, OptimizedScheduleActivity.this, this);
         recyclerView.setAdapter(taskAdapter);
 
         transactionsCollectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -54,9 +55,10 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
 
                 if (querySnapshot != null) {
                     // Process the query snapshot and update the tasks list
-                    OptimizedTasks.clear(); // Clear existing tasks
+                    optimizedTasks.clear(); // Clear existing tasks
                     for (DocumentSnapshot document : querySnapshot) {
                         if (document.exists()) {
+                            Toast.makeText(OptimizedScheduleActivity.this, "Exists", Toast.LENGTH_SHORT).show();
                             String taskId = document.getId();
                             String taskName = document.getString("taskName");
                             String taskDueDate = document.getString("taskDueDate");
@@ -66,11 +68,15 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
 
                             Task task = new Task(taskId, taskName, taskDueDate, taskTimeHours, taskTimeMinute, taskPriority);
                             int calculatedPriority = TaskPriorityAlgorithm(task.getTaskDueDate(), task.getTaskPriority(), task.getTaskTimeHours(), task.getTaskTimeMinutes());
+                            int totalTimeInMinutes = Integer.parseInt(taskTimeHours) * 60 + Integer.parseInt(taskTimeMinute);
+                            task.setTimeConsumed(totalTimeInMinutes);
                             task.setCumulativeTaskPriority(calculatedPriority); // Assuming Task has a setPriority method
-                            OptimizedTasks.add(task);
+                            optimizedTasks.add(task);
+                         Toast.makeText(OptimizedScheduleActivity.this, String.valueOf(calculatedPriority), Toast.LENGTH_SHORT).show();
                         }
                     }
-                    Collections.sort(OptimizedTasks, new TaskComparator());
+                    Collections.sort(optimizedTasks, new TaskComparator());
+                    taskAdapter.notifyDataSetChanged();
 
                 }
             }
@@ -80,7 +86,8 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
 
     public int TaskPriorityAlgorithm(String taskDueDate, String taskPriority, String taskTimeHours, String taskTimeMinutes) {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            // Adjust the date format to match the input date string
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date dueDate = dateFormat.parse(taskDueDate);
             Date currentDate = new Date();
 
@@ -90,6 +97,8 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
 
             // Calculate total task time in minutes
             int totalTimeInMinutes = Integer.parseInt(taskTimeHours) * 60 + Integer.parseInt(taskTimeMinutes);
+
+
 
             // Assign numerical values to task priorities
             int priorityValue;
@@ -108,13 +117,16 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
 
             // Composite priority calculation
             int compositePriority = (priorityValue * 100) - totalTimeInMinutes - daysUntilDue;
-             Toast.makeText(this, compositePriority, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.valueOf(compositePriority), Toast.LENGTH_SHORT).show();
+
             return compositePriority;
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("TaskPriorityAlgorithm Error", e.toString());
             return -1; // Return -1 in case of an error
         }
     }
+
 
     @Override
     public void onTaskMarkedAsDone(String taskId) {

@@ -8,6 +8,15 @@ public class Task {
     private String taskTimeHours;
     private String taskTimeMinutes;
     private String taskPriority;
+    int timeConsumed;
+
+    public int getTimeConsumed() {
+        return timeConsumed;
+    }
+
+    public void setTimeConsumed(int timeConsumed) {
+        this.timeConsumed = timeConsumed;
+    }
 
     public int getCumulativeTaskPriority() {
         return cumulativeTaskPriority;
