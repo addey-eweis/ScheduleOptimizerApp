@@ -208,7 +208,7 @@ public class TasksActivity extends AppCompatActivity implements TaskDoneListener
         doneTasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DoneTasks.class);
+                Intent intent = new Intent(getApplicationContext(), DoneTasksActivity.class);
                 startActivity(intent);
             }
         });

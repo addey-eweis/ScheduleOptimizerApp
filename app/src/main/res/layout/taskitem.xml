@@ -5,37 +5,11 @@
     android:paddingTop="20dp"
     android:paddingHorizontal="20dp"
     >
-
-    <RelativeLayout
+    <Button
         android:id="@+id/priorityIndicatorGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
-
-        <Button
-            android:id="@+id/priorityIndicatorOne"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            />
-<!--            android:background="@drawable/priority_indicator"-->
-
-        <Button
-            android:id="@+id/priorityIndicatorTwo"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_below="@id/priorityIndicatorOne"
-            />
-<!--            android:background="@drawable/priority_indicator" -->
-
-        <Button
-            android:id="@+id/priorityIndicatorThree"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_below="@id/priorityIndicatorTwo"
-            />
-<!--            android:background="@drawable/priority_indicator"-->
-
-    </RelativeLayout>
+        android:layout_width="10dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true" />
 
     <RelativeLayout
         android:id="@+id/taskDetailsGroup"

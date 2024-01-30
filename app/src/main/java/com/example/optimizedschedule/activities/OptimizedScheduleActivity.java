@@ -58,7 +58,7 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
                     optimizedTasks.clear(); // Clear existing tasks
                     for (DocumentSnapshot document : querySnapshot) {
                         if (document.exists()) {
-                            Toast.makeText(OptimizedScheduleActivity.this, "Exists", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OptimizedScheduleActivity.this, document.getString("taskName"), Toast.LENGTH_SHORT).show();
                             String taskId = document.getId();
                             String taskName = document.getString("taskName");
                             String taskDueDate = document.getString("taskDueDate");
@@ -116,7 +116,7 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
             }
 
             // Composite priority calculation
-            int compositePriority = (priorityValue * 100) - totalTimeInMinutes - daysUntilDue;
+            int compositePriority = (totalTimeInMinutes * 10) - (priorityValue * 15) - (daysUntilDue * 20);
             Toast.makeText(this, String.valueOf(compositePriority), Toast.LENGTH_SHORT).show();
 
             return compositePriority;

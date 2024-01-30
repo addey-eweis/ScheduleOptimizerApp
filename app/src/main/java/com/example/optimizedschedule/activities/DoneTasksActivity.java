@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DoneTasks extends AppCompatActivity implements TaskDoneListener {
+public class DoneTasksActivity extends AppCompatActivity implements TaskDoneListener {
     private List<Task> doneTasks;
     private TaskAdapter taskAdapter;
 
@@ -39,7 +39,7 @@ public class DoneTasks extends AppCompatActivity implements TaskDoneListener {
 
         RecyclerView recyclerView = findViewById(R.id.doneTasksRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter = new TaskAdapter(doneTasks, DoneTasks.this, this);
+        taskAdapter = new TaskAdapter(doneTasks, DoneTasksActivity.this, this);
         recyclerView.setAdapter(taskAdapter);
 
         doneTasksCollectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
