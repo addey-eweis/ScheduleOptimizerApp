@@ -4,6 +4,7 @@ package com.example.optimizedschedule.taskListHandeling;
 
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,6 +79,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         }
 
 
+        switch (task.getTaskPriority()) {
+            case "high":
+                holder.PriorityIndicator.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red)));
+                break; // Correctly exits after setting the color
+            case "medium":
+                holder.PriorityIndicator.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange)));
+                break; // Correctly exits after setting the color
+            case "low":
+                holder.PriorityIndicator.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.blue)));
+                break; // Correctly exits after setting the color
+        }
+
+
+
+
     }
 
     @Override
@@ -91,6 +107,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         public TextView taskDueDate;
         public TextView taskTimeHours;
         public TextView taskTimeMinutes;
+        public Button PriorityIndicator;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -98,7 +115,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             taskDueDate = (TextView) itemView.findViewById(R.id.taskDueDate);
             taskTimeHours = (TextView) itemView.findViewById(R.id.taskTimeHours);
             taskTimeMinutes = (TextView) itemView.findViewById(R.id.taskTimeMinutes);
-
+            PriorityIndicator = (Button) itemView.findViewById(R.id.priorityIndicatorGroup);
             doneButton = (Button) itemView.findViewById(R.id.taskFinishedButton);
         }
     }

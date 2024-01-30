@@ -30,6 +30,12 @@ import java.util.List;
 public class OptimizedScheduleActivity extends AppCompatActivity implements TaskDoneListener {
     private List<Task> optimizedTasks;
     private TaskAdapter taskAdapter;
+    private static final int MAX_TASK_DURATION_PER_SLOT = 120; // 2 hours in minutes
+
+    private static final String BREAKFAST_TIME = "08:00 AM - 09:00 AM";
+    private static final String LUNCH_TIME = "12:00 PM - 01:00 PM";
+    private static final String DINNER_TIME = "06:00 PM - 07:00 PM";
+// Add more breaks as needed
 
 
     @Override
@@ -132,4 +138,59 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
     public void onTaskMarkedAsDone(String taskId) {
 
     }
+
+    public List<ScheduleItem> createSchedule(List<Task> tasks) {
+        List<ScheduleItem> scheduleItems = new ArrayList<>();
+        // Sort tasks by priority or other criteria
+        Collections.sort(optimizedTasks, new TaskComparator());
+
+        // Insert fixed breaks
+        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Breakfast", "1 Hour", BREAKFAST_TIME));
+        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Lunch", "1 Hour", LUNCH_TIME));
+        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Dinner", "1 Hour", DINNER_TIME));
+
+
+        int currentHour = 9; // Starting after breakfast
+        for (Task task : tasks) {
+            int totalDurationInMinutes = Integer.parseInt(task.getTaskTimeHours()) * 60 + Integer.parseInt(task.getTaskTimeMinutes());
+            int remainingDuration = totalDurationInMinutes;
+
+            while (remainingDuration > 0) {
+                int slotDuration = Math.min(remainingDuration, MAX_TASK_DURATION_PER_SLOT);
+                String timeSlot = calculateTimeSlot(currentHour, slotDuration);
+                String itemDuration = formatDuration(slotDuration);
+
+                scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.TASK, task.getTaskName(), itemDuration, timeSlot));
+
+                currentHour += slotDuration / 60;
+                remainingDuration -= slotDuration;
+
+                // Check and insert breaks, adjust currentHour accordingly
+                // Also, consider the end of the workday and continue the task the next day if needed
+            }
+        }
+
+        // Insert short breaks between tasks or at specific intervals, adjusting currentTimeSlot as needed
+
+        return scheduleItems;
+    }
+    private String calculateTimeSlot(int startHour, int durationInMinutes) {
+        // Calculate end hour based on duration
+        int endHour = startHour + durationInMinutes / 60;
+        // Format the time slot as a string, e.g., "09:00 AM - 10:00 AM"
+        // Note: You'll need to write this formatting logic
+        return formatTimeSlot(startHour, endHour);
+    }
+    private String formatTimeSlot(int startHour, int endHour) {
+        // Format and return the time slot string
+        // Implement formatting based on your requirements
+        return startHour + ":00 AM - " + endHour + ":00 AM";
+    }
+
+    private String formatDuration(int durationInMinutes) {
+        int hours = durationInMinutes / 60;
+        int minutes = durationInMinutes % 60;
+        return String.format("%02d:%02d", hours, minutes); // Formats time as HH:mm
+    }
+
 }
