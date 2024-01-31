@@ -38,6 +38,12 @@ public class Task {
 //        this.CumulativeTaskPriority = CumulativeTaskPriority;
     }
 
+    public Task(String taskName, String taskTimeHours, String taskTimeMinutes){
+        this.taskName = taskName;
+        this.taskTimeHours = taskTimeHours;
+        this.taskTimeMinutes = taskTimeMinutes;
+    }
+
     public String getTaskName() {
         return taskName;
     }

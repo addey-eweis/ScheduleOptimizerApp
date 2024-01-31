@@ -32,10 +32,6 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
     private TaskAdapter taskAdapter;
     private ScheduleAdapter scheduleAdapter;
     private static final int MAX_TASK_DURATION_PER_SLOT = 120; // 2 hours in minutes
-
-    private static final String BREAKFAST_TIME = "08:00 AM - 09:00 AM";
-    private static final String LUNCH_TIME = "12:00 PM - 01:00 PM";
-    private static final String DINNER_TIME = "06:00 PM - 07:00 PM";
 // Add more breaks as needed
 
 
@@ -152,14 +148,18 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         // Sort tasks by priority or other criteria
 //        Collections.sort(optimizedTasks, new TaskComparator());
-
+        final int BREAK_DURATION = 15; // 15 minutes break
+        final String BREAK_TITLE = "Short Break";
+        final String BREAKFAST_TIME = "8:00 - 9:00";
+        final String LUNCH_TIME = "12:00 - 13:00";
+        final String DINNER_TIME = "18:00 - 19:00";
         // Insert fixed breaks
-        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Breakfast", "1 Hour", BREAKFAST_TIME));
-        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Lunch", "1 Hour", LUNCH_TIME));
-        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Dinner", "1 Hour", DINNER_TIME));
+        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Breakfast", "01:00", BREAKFAST_TIME));
+        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Lunch", "01:00", LUNCH_TIME));
+        scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Dinner", "01:00", DINNER_TIME));
 
 
-        int currentHour = 9; // Starting after breakfast
+        int currentHour = 7; // Starting after breakfast
         for (Task task : tasks) {
             int remainingDuration = Integer.parseInt(task.getTaskTimeHours()) * 60 + Integer.parseInt(task.getTaskTimeMinutes());
 
@@ -171,9 +171,10 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
                 String itemDuration = formatDuration(slotDuration);
 
                 scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.TASK, task.getTaskName(), itemDuration, timeSlot));
+                scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Short Break", "00:15", ""));
 
-                currentHour += slotDuration / 60;
-                remainingDuration -= slotDuration;
+                currentHour += (slotDuration + 15) / 60;
+                remainingDuration -= slotDuration + 15                                                                                                                         ;
 
                 // Check and insert breaks, adjust currentHour accordingly
                 // Also, consider the end of the workday and continue the task the next day if needed
@@ -195,7 +196,7 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
     private String formatTimeSlot(int startHour, int endHour) {
         // Format and return the time slot string
         // Implement formatting based on your requirements
-        return startHour + ":00 AM - " + endHour + ":00 AM";
+        return startHour + ":00 - " + endHour + ":00";
     }
 
     private String formatDuration(int durationInMinutes) {
