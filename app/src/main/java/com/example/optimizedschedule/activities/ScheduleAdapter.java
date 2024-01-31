@@ -23,6 +23,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         this.context = context;
     }
 
+    public void updateData(List<ScheduleItem> newItems) {
+        scheduleItems.clear();
+        scheduleItems.addAll(newItems);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ScheduleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

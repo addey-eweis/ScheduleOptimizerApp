@@ -30,6 +30,7 @@ import java.util.List;
 public class OptimizedScheduleActivity extends AppCompatActivity implements TaskDoneListener {
     private List<Task> optimizedTasks;
     private TaskAdapter taskAdapter;
+    private ScheduleAdapter scheduleAdapter;
     private static final int MAX_TASK_DURATION_PER_SLOT = 120; // 2 hours in minutes
 
     private static final String BREAKFAST_TIME = "08:00 AM - 09:00 AM";
@@ -46,10 +47,16 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
         optimizedTasks = new ArrayList<>();
         CollectionReference transactionsCollectionRef = FirebaseFirestore.getInstance().collection("data");
 
+//        RecyclerView recyclerView = findViewById(R.id.optimizedTasksList);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        taskAdapter = new TaskAdapter(optimizedTasks, OptimizedScheduleActivity.this, this);
+//        recyclerView.setAdapter(taskAdapter);
+//
+
         RecyclerView recyclerView = findViewById(R.id.optimizedTasksList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter = new TaskAdapter(optimizedTasks, OptimizedScheduleActivity.this, this);
-        recyclerView.setAdapter(taskAdapter);
+        scheduleAdapter = new ScheduleAdapter(new ArrayList<>(), this);
+        recyclerView.setAdapter(scheduleAdapter);
 
         transactionsCollectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -64,7 +71,7 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
                     optimizedTasks.clear(); // Clear existing tasks
                     for (DocumentSnapshot document : querySnapshot) {
                         if (document.exists()) {
-                            Toast.makeText(OptimizedScheduleActivity.this, document.getString("taskName"), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(OptimizedScheduleActivity.this, document.getString("taskName"), Toast.LENGTH_SHORT).show();
                             String taskId = document.getId();
                             String taskName = document.getString("taskName");
                             String taskDueDate = document.getString("taskDueDate");
@@ -78,11 +85,13 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
                             task.setTimeConsumed(totalTimeInMinutes);
                             task.setCumulativeTaskPriority(calculatedPriority); // Assuming Task has a setPriority method
                             optimizedTasks.add(task);
-                         Toast.makeText(OptimizedScheduleActivity.this, String.valueOf(calculatedPriority), Toast.LENGTH_SHORT).show();
+
+//                         Toast.makeText(OptimizedScheduleActivity.this, String.valueOf(calculatedPriority), Toast.LENGTH_SHORT).show();
                         }
                     }
                     Collections.sort(optimizedTasks, new TaskComparator());
-                    taskAdapter.notifyDataSetChanged();
+                    List<ScheduleItem> scheduleItems = createSchedule(optimizedTasks);
+                    scheduleAdapter.updateData(scheduleItems); // Update adapter data
 
                 }
             }
@@ -123,7 +132,7 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
 
             // Composite priority calculation
             int compositePriority = (totalTimeInMinutes * 10) - (priorityValue * 15) - (daysUntilDue * 20);
-            Toast.makeText(this, String.valueOf(compositePriority), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, String.valueOf(compositePriority), Toast.LENGTH_SHORT).show();
 
             return compositePriority;
         } catch (Exception e) {
@@ -142,7 +151,7 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
     public List<ScheduleItem> createSchedule(List<Task> tasks) {
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         // Sort tasks by priority or other criteria
-        Collections.sort(optimizedTasks, new TaskComparator());
+//        Collections.sort(optimizedTasks, new TaskComparator());
 
         // Insert fixed breaks
         scheduleItems.add(new ScheduleItem(ScheduleItem.ItemType.BREAK, "Breakfast", "1 Hour", BREAKFAST_TIME));
@@ -152,8 +161,9 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
 
         int currentHour = 9; // Starting after breakfast
         for (Task task : tasks) {
-            int totalDurationInMinutes = Integer.parseInt(task.getTaskTimeHours()) * 60 + Integer.parseInt(task.getTaskTimeMinutes());
-            int remainingDuration = totalDurationInMinutes;
+            int remainingDuration = Integer.parseInt(task.getTaskTimeHours()) * 60 + Integer.parseInt(task.getTaskTimeMinutes());
+
+
 
             while (remainingDuration > 0) {
                 int slotDuration = Math.min(remainingDuration, MAX_TASK_DURATION_PER_SLOT);
@@ -167,6 +177,7 @@ public class OptimizedScheduleActivity extends AppCompatActivity implements Task
 
                 // Check and insert breaks, adjust currentHour accordingly
                 // Also, consider the end of the workday and continue the task the next day if needed
+//            scheduleAdapter.updateData();
             }
         }
 
